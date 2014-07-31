@@ -1,0 +1,24 @@
+.exception-stacktrace
+{
+    white-space: pre;
+}
+
+
+
+/**   ---- WAR ----    */
+
+#playfield
+{
+    border:1px solid black;
+}
+
+
+#globalLog
+{
+    background-color:black;
+    color:lightgray;
+    padding:5px;
+    font-family:monospace;
+    white-space: pre;
+
+}

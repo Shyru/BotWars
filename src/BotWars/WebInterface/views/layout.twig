@@ -1,0 +1,15 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/css/style.css">
+    {% block headadd %}
+    {% endblock %}
+</head>
+<body>
+<h1>This is Botwars {{ app.version }}!!</h1>
+<img src="/static/images/botwars.png">
+{% block content %}
+   <h1>No content given</h1>
+{% endblock %}
+</body>
+
+</html>

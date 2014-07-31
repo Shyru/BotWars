@@ -1,0 +1,19 @@
+{% extends "layout.twig" %}
+
+{% block headadd %}
+    <script type="text/javascript" src="/static/js/war.js"></script>
+    <script type="text/javascript" src="/static/js/websocketconnection.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h2>War!</h2>
+    <div id="playfield">
+
+    </div>
+    <div id="globalLog">
+
+    </div>
+    <script type="text/javascript">
+        connect({{ port }});
+    </script>
+{% endblock %}

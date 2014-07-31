@@ -1,0 +1,16 @@
+{
+    "minimum-stability": "stable",
+    "license": "GPL 3.0",
+    "authors": [
+        {
+            "name": "Daniel Haas",
+            "email": "daniel@file-factory.de"
+        }
+    ],
+    "require": {
+        "kpacha/reactive-silex": "0.1.3",
+        "cboden/ratchet": "0.4.x-dev",
+        "twig/twig": "1.6.5",
+        "monolog/monolog": "1.10.0"
+    }
+}

@@ -1,0 +1,7 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>An exception occured</h1>
+    <p class="exception-message">{{ exception.message }}</p>
+    <p class="exception-stacktrace">{{ exception.stacktrace }}</p>
+{% endblock %}
