@@ -143,3 +143,6 @@ class SplClassLoader
 		}
 	}
 }
+
+$classLoader = new SplClassLoader('BotWars', __DIR__.'/');
+$classLoader->register();

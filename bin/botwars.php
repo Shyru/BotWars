@@ -8,13 +8,11 @@
  */
 
 
-
+//require vendor autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 
-//setup our own autoloader
-require_once __DIR__.'/../src/autoloader.php';
-$botWarsLoader = new BotWars\SplClassLoader('BotWars', realpath(__DIR__."\\..\\src"));
-$botWarsLoader->register();
+//require our own autoloader
+require_once __DIR__ . '/../src/autoload.php';
 
 
 //now create a Server and run it
