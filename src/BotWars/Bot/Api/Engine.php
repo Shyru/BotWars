@@ -117,39 +117,24 @@ class Engine extends BaseApi
 			return true;
 		}
 
-		if ($currentAngle>$_angle)
-		{
-			$newAngleTurnToRight=$_angle-360;
-			$newAngleTurnToLeft=$currentAngle+$_angle;
+		//i tried to find a mathematical algorithm that calculates this, but did not find an easy formula, hence this mapping table
+		$shortestDirectionMapping=array("0-90"=>90,"0-180"=>180,"0-270"=>-90,"90-0"=>-90,"90-180"=>90,"90-270"=>180,"180-0"=>180,"180-90"=>-90,"180-270"=>90,"270-0"=>90,"270-90"=>180,"270-180"=>-90);
 
-		}
-		else
-		{
-			$newAngleTurnToRight=$currentAngle+$_angle;
-			$newAngleTurnToLeft=$_angle-360;
-		}
-		$turnFactor=1;
-		if (abs($newAngleTurnToLeft-$currentAngle) < abs($newAngleTurnToRight-$currentAngle))
-		{ //we have determined that turning to the left is the most efficient
-			$turnFactor=-1;
-			$turnNumber=abs($newAngleTurnToLeft-$currentAngle)/90; //how many 90° turns do we have to make? (should either be 1 or 2)
-		}
-		else
-		{
-			$turnNumber=abs($newAngleTurnToRight-$currentAngle)/90; //how many 90° turns do we have to make? (should either be 1 or 2)
-		}
-
-
-		if ($this->consumeEnergy($this->turnEnergyConsumption*$turnNumber*1.5))
-		{
-			if ($_angle==0 || $_angle==90 || $_angle==180 || $_angle==270)
+		$path=$currentAngle."-".$_angle;
+		if (isset($shortestDirectionMapping[$path]))
+		{ //we have a path, all is well
+			$turnNumber=abs($shortestDirectionMapping[$path])/90; //how many 90° turns do we have to make? (should either be 1 or 2)
+			if ($this->consumeEnergy($this->turnEnergyConsumption*$turnNumber*1.5))
 			{
-				$this->currentAngle+=($turnNumber*90*$turnFactor);
+				$this->currentAngle+=$shortestDirectionMapping[$path];
 				return true;
 			}
-			else return false;
+			return false;
 		}
-		else return false;
+		else
+		{ //mapping not found, this means that $_angle was not ok, consume energy but do nothing.
+			return $this->consumeEnergy(2*$this->turnEnergyConsumption);
+		}
 	}
 
 } 
