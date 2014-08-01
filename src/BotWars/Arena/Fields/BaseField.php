@@ -41,7 +41,7 @@ class BaseField
 		return self::HEIGHT_NONE;
 	}
 
-	function getInfo()
+	function getInfo($_advanced=false)
 	{
 		$fieldInfo=new FieldInfo();
 		$fieldInfo->movable=!$this->isFilled();

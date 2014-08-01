@@ -15,5 +15,15 @@ namespace BotWars\Bot;
  */
 class Status
 {
+	/** @var  float The health of the bot. (0-100) */
+	public $health;
+	/** @var  int How much energy the bot has available. (0-10000) */
+	public $energyAvailable;
+	/** @var  string the Team the bot belongs to */
+	public $team;
+	/** @var  string the name of the bot */
+	public $name;
+	/** @var  string the model name of the bot */
+	public $modelName;
 
-} 
+}

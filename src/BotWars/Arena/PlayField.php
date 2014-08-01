@@ -57,9 +57,10 @@ class PlayField
 	/**
 	 * @param int $_x The x coordinate
 	 * @param int $_y The y coordinate
+	 * @param bool $_advanced If advanced information should be returned.
 	 * @return FieldInfo|null
 	 */
-	public function getFieldInfo($_x, $_y)
+	public function getFieldInfo($_x, $_y, $_advanced=false)
 	{
 		if (isset($this->fields[$_x]) && isset($this->fields[$_x][$_y]))
 		{

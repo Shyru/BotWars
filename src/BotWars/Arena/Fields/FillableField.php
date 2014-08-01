@@ -35,13 +35,13 @@ class FillableField extends Basefield
 		else return false;
 	}
 
-	function getInfo()
+	function getInfo($_advanced=false)
 	{
 		$fieldInfo= parent::getInfo();
 		if ($this->bot)
 		{
 			$fieldInfo->containsBot=true;
-			$fieldInfo->botInfo=$this->bot->getInfo();
+			$fieldInfo->botInfo=$this->bot->getRadarInfo($_advanced);
 		}
 		return $fieldInfo;
 	}

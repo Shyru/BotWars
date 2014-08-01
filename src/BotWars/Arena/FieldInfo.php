@@ -21,8 +21,8 @@ class FieldInfo
 	/** @var  bool Does the field contain a bot? */
 	public $containsBot;
 
-	/** @var string The identifier of the team the bot belongs to. */
-	public $botInfo;
+	/** @var RadarInfo The bot radar info. */
+	public $botRadarInfo;
 
 	/** @var int The height the field is filled with, if any. Look at BaseField::HEIGHT_* */
 	public $height;

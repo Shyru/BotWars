@@ -13,11 +13,14 @@ namespace BotWars\Bot;
 /**
  * Contains all information another bot can get about a bot.
  */
-class Info
+class RadarInfo
 {
 	/** @var  string the identifier of the team the bot belongs to. */
 	public $team;
 
 	/** @var  int the Weight of the bot (in t) */
 	public $weight;
+
+	/** @var float The health of the bot. (0-100) Only available if detailed radar scanning was done. */
+	public $health=false;
 } 
