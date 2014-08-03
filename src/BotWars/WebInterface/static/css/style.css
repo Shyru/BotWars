@@ -10,6 +10,7 @@
 #playfield
 {
     border:1px solid black;
+    position:relative;
 }
 
 
@@ -20,5 +21,26 @@
     padding:5px;
     font-family:monospace;
     white-space: pre;
+
+}
+
+.bot
+{
+    position: absolute;
+    width:30px;
+    height:30px;
+    top:10px;
+    left:10px;
+}
+
+.bot .engine,
+.bot .weapons
+{
+    position:absolute;
+    width:30px;
+    height:30px;
+    background-size: 100%;
+    transition: transform 2s, top 3s, left 3s;
+    -moz-transition: transform 2s, top 3s, left 3s;
 
 }
