@@ -11,6 +11,7 @@ namespace BotWars;
 
 use BotWars\Arena\PlayField;
 use BotWars\Server\Stack;
+use BotWars\Ui\Messages\BotUpdatedMessage;
 use BotWars\WebInterface\WebSocketServer;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -100,6 +101,39 @@ class Server
 					"width"=>15,
 					"height"=>15)
 				);
+
+				$weaponDirection=0;
+
+				//test bot-updated messages
+				$botUpdatedMessage=new BotUpdatedMessage(array(
+					"id"=>1,
+					"x"=>4,
+					"y"=>5,
+					"botStatus"=>false,
+					"engineDirection"=>0,
+					"weaponDirection"=>$weaponDirection,
+					"headDirection"=>0,
+					"engineImageUrl"=>"/static/images/testbot_torso.png",
+					"weaponsImageUrl"=>"/static/images/testbot_weapons.png"
+				));
+				$webSocketServer->sendInitializationMessage($botUpdatedMessage);
+				$stack["loop"]->addPeriodicTimer(5,function() use ($webSocketServer, &$weaponDirection) {
+					//test bot-updated messages
+					$weaponDirection+=45;
+					$this->log->debug("Updating weapon angle! New value: ".$weaponDirection);
+					$botUpdatedMessage=new BotUpdatedMessage(array(
+						"id"=>1,
+						"x"=>3,
+						"y"=>5,
+						"botStatus"=>false,
+						"engineDirection"=>0,
+						"weaponDirection"=>$weaponDirection,
+						"headDirection"=>0,
+						"engineImageUrl"=>"/static/images/testbot_torso.png",
+						"weaponsImageUrl"=>"/static/images/testbot_weapons.png"
+					));
+					$webSocketServer->sendMessage($botUpdatedMessage);
+				});
 
 
 			}

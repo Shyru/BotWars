@@ -58,8 +58,7 @@ class WebSocketServer implements MessageComponentInterface, SendMessageInterface
 		$buffer=$this->logHandler->getBuffer();
 		foreach ($buffer as $message)
 		{
-			$trimmedMessage=trim($message);
-			if ($trimmedMessage) $this->sendLogMessage($conn,$trimmedMessage);
+			$this->sendLogMessage($conn,$message);
 		}
 		//now send all init-messages if any
 		foreach ($this->initMessages as $initMessage)

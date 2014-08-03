@@ -16,6 +16,8 @@ namespace BotWars\Ui\Messages;
  */
 class BotUpdatedMessage extends BaseMessage
 {
+	/** @var  int The id  of the bot, to be able to identify them. */
+	public $id;
 	/** @var  int The x-coordinate of the tile the bot is located at. */
 	public $x;
 	/** @var  int the y-coordinate of the tile the bot is located at. */
@@ -29,4 +31,8 @@ class BotUpdatedMessage extends BaseMessage
 	/** @var  float The direction the head faces to. (In degrees) */
 	public $headDirection;
 
-} 
+	public $engineImageUrl;
+	public $weaponsImageUrl;
+
+
+}
