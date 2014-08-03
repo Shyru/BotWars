@@ -36,9 +36,20 @@ function onMessage(evt)
         }
         else if (message.type=="SetupPlayFieldMessage")
         {
-
-            document.getElementById("playfield").style.width=message.width*message.tileSize+"px";
-            document.getElementById("playfield").style.height=message.height*message.tileSize+"px";
+            //first adjust the size of our playfield
+            var tileSize=message.tileSize;
+            document.getElementById("playfield").style.width=message.width*tileSize+"px";
+            document.getElementById("playfield").style.height=message.height*tileSize+"px";
+            var imageHtml="";
+            //now add images for every tile:
+            for (var x=0; x<message.tiles.length; x++)
+            {
+                for (var y=0; y<message.tiles[x].length; y++)
+                {
+                    imageHtml+='<img src="'+message.tiles[x][y].imageUrl+'" width="'+tileSize+'px" height="'+tileSize+'px" alt=""/>'
+                }
+            }
+            document.getElementById("playfield").innerHTML=imageHtml;
         }
     }
 

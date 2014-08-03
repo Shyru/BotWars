@@ -63,7 +63,12 @@ class BaseTile
 	 */
 	function getImageUrl()
 	{
-		return "//static/images/tile_sand_a.jpg";
+		return "/static/images/tile_sand_a.jpg";
+	}
+
+	function buildUiTileInfo()
+	{
+		return (object)array("imageUrl"=>$this->getImageUrl());
 	}
 
 

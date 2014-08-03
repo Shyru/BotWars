@@ -97,8 +97,8 @@ class Server
 
 				$this->log->info("Generating new playfield...");
 				$app['playfield']=new PlayField($webSocketServer,$this->initializeLogger(new Logger("PlayField")),array(
-					"width"=>20,
-					"height"=>10)
+					"width"=>15,
+					"height"=>15)
 				);
 
 

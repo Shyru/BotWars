@@ -16,7 +16,8 @@ use BotWars\WebInterface\WebSocketServer;
 
 
 /**
- * Please add documentation for Playfield!
+ * Represents the play-field where a war happens.
+ *
  */
 class PlayField
 {
@@ -25,6 +26,16 @@ class PlayField
 	/** @var BaseTile[][] */
 	private $tiles;
 
+	/**
+	 * Constructs a new PlayField.
+	 *
+	 * @param SendMessageInterface $_ui The interface to the ui, so that the playfield can talk to the ui.
+	 * @param \Monolog\Logger $_log The log so that the playfield may log something.
+	 * @param array $_options The options of the playfield. Currently this supports the following values:
+	 * - width: The width of the playfield. Defaults to 10
+	 * - height: The height of the playfield. Defaults to 10
+	 * - tileSize: The size of the tiles in pixels. Defaults to 40
+	 */
 	function __construct(SendMessageInterface $_ui, \Monolog\Logger $_log,$_options)
 	{
 		$this->ui=$_ui;
@@ -32,7 +43,7 @@ class PlayField
 		$defaultOptions=array(
 			"width"=>10,
 			"height"=>10,
-			"tileSize"=>20
+			"tileSize"=>40
 		);
 		$options=array_merge($defaultOptions,$_options);
 		$this->log->info("Size is ".$options["width"]."x".$options["height"]);
@@ -51,8 +62,24 @@ class PlayField
 		$this->ui->sendInitializationMessage(new SetupPlayFieldMessage(array(
 			"width"=>$options["width"],
 			"height"=>$options["height"],
-			"tileSize"=>$options["tileSize"])
-		));
+			"tileSize"=>$options["tileSize"],
+			"tiles"=>$this->buildUiTiles()
+		)));
+	}
+
+	private function buildUiTiles()
+	{
+		$tiles=array();
+		for ($x=0; $x<count($this->tiles); $x++)
+		{
+			$column=array();
+			for ($y=0; $y<count($this->tiles[$x]); $y++)
+			{
+				$column[]=$this->tiles[$x][$y]->buildUiTileInfo();
+			}
+			$tiles[]=$column;
+		}
+		return $tiles;
 	}
 
 	/**

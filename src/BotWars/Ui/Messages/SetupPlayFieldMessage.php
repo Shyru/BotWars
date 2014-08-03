@@ -19,4 +19,5 @@ class SetupPlayFieldMessage extends BaseMessage
 	public $width;
 	public $height;
 	public $tileSize;
+	public $tiles;
 }
