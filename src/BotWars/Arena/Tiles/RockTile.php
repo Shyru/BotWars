@@ -7,13 +7,15 @@
  * @author Daniel Haas <daniel@file-factory.de>
  */
 
-namespace BotWars\Arena\Fields;
+namespace BotWars\Arena\Tiles;
 
 
 /**
- * Please add documentation for Rock!
+ * RockTile is a tile that is filled with a rock.
+ * The rock is large, which means that it is full-height and one
+ * cannot should over it.
  */
-class Rock extends BaseField
+class RockTile extends BaseTile
 {
 	function isFilled()
 	{

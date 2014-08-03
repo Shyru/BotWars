@@ -8,8 +8,10 @@
  */
 
 namespace BotWars\Arena;
-use BotWars\Arena\Fields\BaseField;
-use BotWars\Arena\Fields\FillableField;
+use BotWars\Arena\Tiles\BaseTile;
+use BotWars\Arena\Tiles\FillableTile;
+use BotWars\Ui\Messages\SetupPlayFieldMessage;
+use BotWars\Ui\SendMessageInterface;
 use BotWars\WebInterface\WebSocketServer;
 
 
@@ -19,53 +21,52 @@ use BotWars\WebInterface\WebSocketServer;
 class PlayField
 {
 	private $log;
-	private $webSocketServer;
-	/** @var BaseField[][] */
-	private $fields;
+	private $ui;
+	/** @var BaseTile[][] */
+	private $tiles;
 
-	function __construct(WebsocketServer $_webSocketServer,\Monolog\Logger $_log,$_options)
+	function __construct(SendMessageInterface $_ui, \Monolog\Logger $_log,$_options)
 	{
-		$this->webSocketServer=$_webSocketServer;
+		$this->ui=$_ui;
 		$this->log=$_log;
 		$defaultOptions=array(
 			"width"=>10,
 			"height"=>10,
-			"fieldSize"=>20
+			"tileSize"=>20
 		);
 		$options=array_merge($defaultOptions,$_options);
 		$this->log->info("Size is ".$options["width"]."x".$options["height"]);
-		$this->fields=array();
+		$this->tiles=array();
 		for ($x=0; $x<$options["width"]; $x++)
 		{
 			$column=array();
 			for ($y=0; $y<$options["height"]; $y++)
 			{
-				$column[]=new FillableField();
+				$column[]=new FillableTile();
 			}
-			$this->fields[]=$column;
+			$this->tiles[]=$column;
 		}
 
 
-		$this->webSocketServer->addInitMessage(array(
-			"type"=>"initField",
+		$this->ui->sendInitializationMessage(new SetupPlayFieldMessage(array(
 			"width"=>$options["width"],
 			"height"=>$options["height"],
-		    "fieldSize"=>$options["fieldSize"])
-		);
+			"tileSize"=>$options["tileSize"])
+		));
 	}
 
 	/**
 	 * @param int $_x The x coordinate
 	 * @param int $_y The y coordinate
 	 * @param bool $_advanced If advanced information should be returned.
-	 * @return FieldInfo|null
+	 * @return TileInfo|null
 	 */
 	public function getFieldInfo($_x, $_y, $_advanced=false)
 	{
-		if (isset($this->fields[$_x]) && isset($this->fields[$_x][$_y]))
+		if (isset($this->tiles[$_x]) && isset($this->tiles[$_x][$_y]))
 		{
-			/** @var BaseField $field */
-			$field=$this->fields[$_x][$_y];
+			/** @var BaseTile $field */
+			$field=$this->tiles[$_x][$_y];
 			return $field->getInfo();
 		}
 		else return null;

@@ -7,15 +7,15 @@
  * @author Daniel Haas <daniel@file-factory.de>
  */
 
-namespace BotWars\Arena\Fields;
-use BotWars\Arena\FieldInfo;
+namespace BotWars\Arena\Tiles;
+use BotWars\Arena\TileInfo;
 use BotWars\Bot\BotBase;
 
 
 /**
  * The base-class for all fields.
  */
-class FillableField extends Basefield
+class FillableTile extends BaseTile
 {
 	/** @var  BotBase */
 	private $bot;
@@ -26,7 +26,7 @@ class FillableField extends Basefield
 	}
 
 	/**
-	 * Overrides isFilled() to check if bot is in this field or not.
+	 * Overrides isFilled() to check if bot is in this tile or not.
 	 * @return bool
 	 */
 	function isFilled()

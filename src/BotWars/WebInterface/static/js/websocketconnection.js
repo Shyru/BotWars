@@ -30,15 +30,15 @@ function onMessage(evt)
     console.log("Got message!",message);
     if (message.type)
     { //we got a valid message
-        if (message.type=="log")
+        if (message.type=="AppendToLogMessage")
         {
             handleLogMessage(message);
         }
-        else if (message.type=="initField")
+        else if (message.type=="SetupPlayFieldMessage")
         {
 
-            document.getElementById("playfield").style.width=message.width*message.fieldSize+"px";
-            document.getElementById("playfield").style.height=message.height*message.fieldSize+"px";
+            document.getElementById("playfield").style.width=message.width*message.tileSize+"px";
+            document.getElementById("playfield").style.height=message.height*message.tileSize+"px";
         }
     }
 
@@ -54,6 +54,6 @@ function handleLogMessage(_logMessage)
     var targetMapping={
         "global":"globalLog"
     };
-    document.getElementById(targetMapping[_logMessage.logTarget]).innerHTML+=_logMessage.logMessage+"\n";
+    document.getElementById(targetMapping[_logMessage.logName]).innerHTML+=_logMessage.message+"\n";
 
 }

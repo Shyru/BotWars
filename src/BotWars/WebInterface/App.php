@@ -86,7 +86,7 @@ class Application extends \Silex\Application
 
 $app = new Application();
 $app['debug'] = true;
-$app['version']="0.1.1";
+$app['version']="0.2.0-Alpha";
 
 
 $app->register(new \Silex\Provider\TwigServiceProvider(), array(

@@ -37,7 +37,7 @@ class Radar extends BaseApi
 	 * @param int $_x The x-coordinate of the field to discover
 	 * @param int $_y The y-coordinate of the field to discover
 	 * @param bool $_advanced Set to true to gather advanced information.
-	 * @return \BotWars\Arena\FieldInfo|null The FieldInfo-object or null if the coordinates where invalid or when there is not enough energy to discover.
+	 * @return \BotWars\Arena\TileInfo|null The FieldInfo-object or null if the coordinates where invalid or when there is not enough energy to discover.
 	 */
 	public function discoverField($_x, $_y, $_advanced=false)
 	{

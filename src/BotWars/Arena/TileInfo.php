@@ -11,17 +11,18 @@ namespace BotWars\Arena;
 
 
 /**
- * Contains generic information about a field.
+ * Contains generic information about a tile.
+ * This is used from the Radar-API for bots.
  */
-class FieldInfo
+class TileInfo
 {
-	/** @var  bool Wether a bot can move into this field.  */
+	/** @var  bool Whether a bot can move into this tile.  */
 	public $movable;
 
-	/** @var  bool Does the field contain a bot? */
+	/** @var  bool Does the tile contain a bot? */
 	public $containsBot;
 
-	/** @var RadarInfo The bot radar info. */
+	/** @var \BotWars\Bot\RadarInfo The bot radar info. */
 	public $botRadarInfo;
 
 	/** @var int The height the field is filled with, if any. Look at BaseField::HEIGHT_* */

@@ -9,13 +9,15 @@
 
 namespace BotWars\WebInterface;
 
+use BotWars\Ui\Messages;
+use BotWars\Ui\SendMessageInterface;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
 /**
  * Please add documentation for WebSocketServer!
  */
-class WebSocketServer implements MessageComponentInterface
+class WebSocketServer implements MessageComponentInterface, SendMessageInterface
 {
 	private $log;
 	private $logHandler;
@@ -35,17 +37,12 @@ class WebSocketServer implements MessageComponentInterface
 
 	function onLogMessage($_message)
 	{
-		foreach ($this->clients as $client)
-		{
-			$this->sendLogMessage($client,$_message);
-		}
+		$this->sendMessage(new Messages\AppendToLogMessage(array("logName"=>"global","message"=>$_message)));
 	}
 
-	private function sendLogMessage(ConnectionInterface $conn, $_logMessage)
+	private function sendLogMessage(ConnectionInterface $conn, $_message)
 	{
-		$message=array("type"=>"log","logTarget"=>"global","logMessage"=>$_logMessage);
-		$conn->send(json_encode($message));
-
+		$conn->send(new Messages\AppendToLogMessage(array("logName"=>"global","message"=>$_message)));
 	}
 
 	/**
@@ -67,7 +64,7 @@ class WebSocketServer implements MessageComponentInterface
 		//now send all init-messages if any
 		foreach ($this->initMessages as $initMessage)
 		{
-			$conn->send(json_encode($initMessage));
+			$conn->send($initMessage);
 		}
 		$this->clients->attach($conn);
 	}
@@ -105,16 +102,34 @@ class WebSocketServer implements MessageComponentInterface
 		// TODO: Implement onMessage() method.
 	}
 
-	public function broadcastMessage($_message)
+
+	/**
+	 * Sends a message to the user-interface.
+	 *
+	 * @param Messages\BaseMessage $_message The message that should be sent.
+	 */
+	public function sendMessage(Messages\BaseMessage $_message)
 	{
+		// TODO: Implement sendMessage() method.
 		foreach ($this->clients as $client)
 		{
-			$client->send(json_encode($_message));
+			$client->send($_message);
 		}
 	}
 
-	public function addInitMessage($_message)
+	/**
+	 * Sends an initialization message to the user-interface and buffers it for later connecting user-interfaces.
+	 * Initialization messages are buffered so that when new user-interfaces connect
+	 * during the game they get sent all initialization messages. This allows late-coming user-interfaces
+	 * to construct a working UI even if the war has already begun.
+	 *
+	 * @param Messages\BaseMessage $_message
+	 */
+	public function sendInitializationMessage(Messages\BaseMessage $_message)
 	{
+		$this->sendMessage($_message);
 		$this->initMessages[]=$_message;
 	}
+
+
 }
