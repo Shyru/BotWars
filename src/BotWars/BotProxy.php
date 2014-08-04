@@ -22,9 +22,15 @@ class BotProxy
 	/** @var BotBase */
 	private $botImplementation;
 
-	function __construct($_filePath)
+	function __construct($_filePath,$_team,$_energyAvailable)
 	{
-		$this->$botImplementation=require_once($_filePath);
+		$botClassName=require_once($_filePath);
+		$this->botImplementation=new $botClassName($_team,$_energyAvailable);
+		if (!$this->botImplementation instanceof BotBase)
+		{
+			throw new \RuntimeException("Invalid bot class returned from bot-file!");
+		}
+
 	}
 
 	/**
@@ -41,6 +47,11 @@ class BotProxy
 	public function setPlayField(PlayField $playField)
 	{
 		$this->playField = $playField;
-		$this->$botImplementation->setPlayField($playField);
+		$this->botImplementation->setPlayField($playField);
+	}
+
+	public function nextTurn()
+	{
+		$this->botImplementation->nextTurn();
 	}
 } 

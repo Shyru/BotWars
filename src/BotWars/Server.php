@@ -19,19 +19,22 @@ use Ratchet\Http\HttpServer;
 
 
 /**
- * Please add documentation for Runner!
+ * The botwars Server!
  */
 class Server
 {
 
 	private $webSocketPortNumber;
+	private $botPaths;
+	private $nextTurnBot;
+	/** @var  BotProxy[] */
+	private $bots;
 
 	/**
 	 *
 	 */
-	function __construct()
+	function __construct($_arguments)
 	{
-
 
 		$logFormatter=new LogFormatter();
 		//create a stdout log handler
@@ -46,7 +49,7 @@ class Server
 
 		//now create a base log for our self
 		$this->log=$this->initializeLogger(new Logger("Server"));
-
+		$this->botPaths=array_slice($_arguments,1);
 
 
 	}
@@ -82,6 +85,19 @@ class Server
 			//ok generate a playfield
 			if (!isset($app['playfield']))
 			{
+
+				$this->log->info("Trying to load bots from commandline...");
+
+				$this->bots=array();
+
+				foreach ($this->botPaths as $botPath)
+				{
+					$this->log->debug("Creating BotProxy from $botPath ...");
+					$this->bots[]=new BotProxy($botPath,"red",100);
+				}
+				$this->nextTurnBot=0;
+
+
 				//initialize websocket Server:
 				$this->webSocketPortNumber=$_port+1;
 				$this->log->info("Creating websocket server on port $this->webSocketPortNumber...");
@@ -101,6 +117,11 @@ class Server
 					"width"=>15,
 					"height"=>15)
 				);
+
+				foreach ($this->bots as $bot)
+				{
+					$bot->setPlayField($app['playfield']);
+				}
 
 				$weaponDirection=0;
 
@@ -148,6 +169,15 @@ class Server
 
 		$stack->listen($_port);
 
+	}
+
+	function nextBotTurn()
+	{
+		$currentBot=$this->bots[$this->nextTurnBot];
+		$currentBot->nextTurn();
+
+		$this->nextTurnBot++;
+		if ($this->nextTurnBot==count($this->bots)) $this->nextTurnBot=0;
 	}
 
 } 

@@ -38,7 +38,7 @@ abstract class BotBase
 	/** @var  float The health of the bot. (0-100) */
 	private $health;
 
-	function __construct($_team,$_energyAvailable=0)
+	final function __construct($_team,$_energyAvailable=0)
 	{
 		$this->team=$_team;
 		$this->energyAvailable=$_energyAvailable;
@@ -47,7 +47,7 @@ abstract class BotBase
 	/**
 	 * @param \BotWars\Arena\PlayField $playField
 	 */
-	public final function setPlayField(PlayField $playField)
+	final public function setPlayField(PlayField $playField)
 	{
 		$this->playField = $playField;
 	}
@@ -61,7 +61,7 @@ abstract class BotBase
 	/**
 	 * @param int $energyPerTurn
 	 */
-	public function setEnergyPerTurn($energyPerTurn)
+	final public function setEnergyPerTurn($energyPerTurn)
 	{
 		$this->energyPerTurn = $energyPerTurn;
 	}
@@ -69,7 +69,7 @@ abstract class BotBase
 	/**
 	 * @return int
 	 */
-	public function getEnergyAvailable()
+	final public function getEnergyAvailable()
 	{
 		return $this->energyAvailable;
 	}
@@ -79,7 +79,7 @@ abstract class BotBase
 	 * @param $_amount
 	 * @throws \InvalidArgumentException If the amount that should be subtracted is not available anymore.
 	 */
-	public function subtractEnergy($_amount)
+	final public function subtractEnergy($_amount)
 	{
 		if ($_amount>0)
 		{
@@ -99,9 +99,33 @@ abstract class BotBase
 	/**
 	 * @return string
 	 */
-	protected function getTeam()
+	final protected function getTeam()
 	{
 		return $this->team;
+	}
+
+	/**
+	 * Provides the Communication-Api to the bot.
+	 */
+	protected function getCommunicationApi()
+	{
+
+	}
+
+	/**
+	 * Provides the Engine-Api to the bot.
+	 */
+	protected function getEngineApi()
+	{
+
+	}
+
+	/**
+	 * Provides the Radar-Api to the bot.
+	 */
+	protected function getRadarApi()
+	{
+
 	}
 
 

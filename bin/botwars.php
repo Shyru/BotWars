@@ -16,7 +16,7 @@ require_once __DIR__ . '/../src/autoload.php';
 
 
 //now create a Server and run it
-$server=new \BotWars\Server();
+$server=new \BotWars\Server($argv);
 $server->run();
 
 
